@@ -60,3 +60,9 @@ kafka-topics --zookeeper localhost:2181 --topic comics_result --create --partiti
 http://localhost:8086/result
 http://localhost:8085/characterCount
 
+
+// Word count topics
+--------------------
+kafka-topics --zookeeper localhost:2181 --topic words_topic --create --partitions 3 --replication-factor 1
+kafka-topics --zookeeper localhost:2181 --topic word_count_topic --create --partitions 3 --replication-factor 1
+

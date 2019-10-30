@@ -51,7 +51,8 @@ public class TweetProcessor {
 				})
 				// Convert the filtered list into a Kstream with key as the hero name and value 1
 				.flatMap((key, value) -> {
-					List<KeyValue<String, Long>> result = new LinkedList<>();
+					
+					final List<KeyValue<String, Long>> result = new LinkedList<>();
 					Arrays.stream(mcuCharacters).forEach(mcuCharacter -> {
 						if (value.contains(mcuCharacter)) {
 							result.add(new KeyValue<String, Long>(mcuCharacter, 1L));
@@ -92,11 +93,13 @@ public class TweetProcessor {
 		final StringBuilder dcResult = new StringBuilder("DC Characters <br/>--------------------<br/>");
 		
 		characterStore.all().forEachRemaining((characters) -> {
-			String value = "<b>" + characters.key + " : " + characters.value + "<b/><br/>";
-			if (Arrays.stream(mcuCharacters).anyMatch(characters.key::equals)) {
-				marvelResult.append(value);
+			String key = characters.key;
+			Long value = characters.value;
+			String characterCount = "<b>" + key + " : " + value + "<b/><br/>";
+			if (Arrays.stream(mcuCharacters).anyMatch(key::equals)) {
+				marvelResult.append(characterCount);
 			} else {
-				dcResult.append(value);
+				dcResult.append(characterCount);
 			}
 		});
 
